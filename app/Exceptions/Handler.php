@@ -37,4 +37,22 @@ class Handler extends ExceptionHandler
             //
         });
     }
+
+    /**
+     * Render an exception into an HTTP response.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Throwable  $exception
+     * @return \Illuminate\Http\Response|\Illuminate\Http\JsonResponse
+     *
+     * @throws \Throwable
+     */
+    public function render($request, Throwable $exception)
+    {
+        if($exception instanceof ApiException){
+            return response()->json(['message'=>$exception->getMessage(),'code'=>$exception->getCode()??433]);
+        }
+
+        return parent::render($request, $exception);
+    }
 }
