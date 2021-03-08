@@ -1,0 +1,17 @@
+composer global require laravel/installer
+
+laravel new blog
+
+==== laravel 报 Target class does not exist解决方案 ====
+在项目里找
+\app\Providers\RouteServiceProvider.php
+这个文件
+
+然后找
+protected $namespace = 'App\\Http\\Controllers';
+这行代码
+
+没有找到就加在
+class RouteServiceProvider extends ServiceProvider{}
+这个东西里面,找到了就解除注释就好
+================
