@@ -2,17 +2,16 @@
 
 use Illuminate\Support\Facades\Route;
 
-//不需要登录的接口
 Route::namespace('Admin\\v1')->prefix('admin/v1')->group(function(){
-    Route::get('/testNoLogin','TestController@testNoLogin');
-    Route::post('/login','LoginController@login');
-});
 
-//需要登录的接口
-Route::middleware('check_token')->namespace('Admin\\v1')->prefix('admin/v1')->group(function(){
-    Route::get('/testLogin','TestController@testLogin');
-});
+    Route::prefix('auth')->group(function(){
+        Route::post('login','AuthController@login');
+        Route::post('me', 'AuthController@me');
+        Route::post('logout', 'AuthController@logout');
+        Route::post('refresh', 'AuthController@refresh');
+    });
 
+});
 
 
 
