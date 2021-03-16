@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin\v1;
 
 
 use App\Tools\Utils;
-use Illuminate\Http\Client\Request;
+use Illuminate\Http\Request;
 
 class NavigationController extends BaseController
 {
