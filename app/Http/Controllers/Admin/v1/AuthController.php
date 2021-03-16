@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin\v1;
 
-use Illuminate\Http\Request;
+use App\Tools\Utils;
 
 class AuthController extends BaseController
 {
@@ -16,7 +16,7 @@ class AuthController extends BaseController
         $credentials = request(['username', 'password']);
 
         if (! $token = auth('admin')->attempt($credentials)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+            return Utils::resError('密码账号错误');
         }
 
         return $this->respondWithToken($token);
@@ -42,7 +42,7 @@ class AuthController extends BaseController
     {
         auth('admin')->logout();
 
-        return response()->json(['message' => 'Successfully logged out']);
+        return Utils::resOk('退出成功');
     }
 
     /**
@@ -65,7 +65,7 @@ class AuthController extends BaseController
      */
     protected function respondWithToken($token)
     {
-        return response()->json([
+        return Utils::resOk('', [
             'access_token' => $token,
             'token_type' => 'bearer',
             'expires_in' => auth('admin')->factory()->getTTL() * 60

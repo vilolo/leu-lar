@@ -10,6 +10,27 @@ use Illuminate\Support\Facades\Validator as IValidator;
 
 class Utils
 {
+    const CODE_OK = 200;
+    const CODE_ERROR = 433;
+
+    public static function resOk($msg = '', $data = [])
+    {
+        return response()->json([
+            'code' => self::CODE_OK,
+            'msg' => $msg?:'Success',
+            'data' => $data
+        ]);
+    }
+
+    public static function resError($msg = '', $data = [], $code = '')
+    {
+        return response()->json([
+            'code' => $code?$code:self::CODE_ERROR,
+            'msg' => $msg?:'Failed',
+            'data' => $data
+        ]);
+    }
+
     public static function validator(Request $request, array $rules, array $messages = []){
         $validator = IValidator::make($request->all(), $rules, $messages);
         if ($validator->fails()) {
